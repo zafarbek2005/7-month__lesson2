@@ -1,18 +1,27 @@
-import React from 'react'
-import { increment } from '../../redux/counterslice'
-import { useDispatch } from 'react-redux'
-
+import React, { useState } from 'react';
+import { increment } from '../../redux/counterslice';
+import { useDispatch } from 'react-redux';
 
 const Inc = () => {
-    let dispatch = useDispatch()
-  return (
-   <>
-   <input type="number"onSubmit={()=>dispatch(increment())} />
-   <button  onClick={()=>dispatch(increment())}>sumbit</button>
-   <button  onClick={()=>dispatch(increment())}>increment</button>
-   
-   </>
-  )
-}
+    const [value, setValue] = useState(0); 
+    const dispatch = useDispatch();
 
-export default Inc
+    const handleChange = (event) => {
+        setValue(event.target.value);
+    };
+
+    const handleSubmit = () => {
+        dispatch(increment(value)); 
+        setValue(0); 
+    };
+
+    return (
+        <>
+            <input id='number' type="number" value={value} onChange={handleChange} />
+            <button onClick={handleSubmit}>Submit</button>
+            <button onClick={() => dispatch(increment())}>Increment</button>
+        </>
+    );
+};
+
+export default Inc;
